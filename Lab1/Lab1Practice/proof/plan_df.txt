@@ -1,14 +1,14 @@
-2025-10-21 13:46:49.756311
+2025-12-24 12:46:26.947082
 
 AdaptiveSparkPlan isFinalPlan=false
-+- TakeOrderedAndProject(limit=10, orderBy=[count#1446L DESC NULLS LAST,token#1445 ASC NULLS FIRST], output=[token#1445,count#1446L])
-   +- HashAggregate(keys=[token#1445], functions=[count(1)], output=[token#1445, count#1446L])
-      +- Exchange hashpartitioning(token#1445, 200), ENSURE_REQUIREMENTS, [plan_id=1021]
-         +- HashAggregate(keys=[token#1445], functions=[partial_count(1)], output=[token#1445, count#1512L])
-            +- Filter NOT (token#1445 = )
-               +- Generate explode(split(lower(text#1052), \s+, -1)), false, [token#1445]
-                  +- InMemoryTableScan [text#1052]
-                        +- InMemoryRelation [id#1049, category#1050, value#1051, text#1052], StorageLevel(disk, memory, deserialized, 1 replicas)
++- TakeOrderedAndProject(limit=10, orderBy=[count#414L DESC NULLS LAST,token#413 ASC NULLS FIRST], output=[token#413,count#414L])
+   +- HashAggregate(keys=[token#413], functions=[count(1)], output=[token#413, count#414L])
+      +- Exchange hashpartitioning(token#413, 200), ENSURE_REQUIREMENTS, [plan_id=378]
+         +- HashAggregate(keys=[token#413], functions=[partial_count(1)], output=[token#413, count#480L])
+            +- Filter NOT (token#413 = )
+               +- Generate explode(split(lower(text#20), \s+, -1)), false, [token#413]
+                  +- InMemoryTableScan [text#20]
+                        +- InMemoryRelation [id#17, category#18, value#19, text#20], StorageLevel(disk, memory, deserialized, 1 replicas)
                               +- Union
-                                 :- FileScan csv [id#1049,category#1050,value#1051,text#1052] Batched: false, DataFilters: [], Format: CSV, Location: InMemoryFileIndex(1 paths)[file:/Users/lorenzo/Documents/Cours/E4FD/Data Engineering/Lab1/Lab1Pra..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<id:int,category:string,value:double,text:string>
-                                 +- FileScan csv [id#1070,category#1071,value#1072,text#1073] Batched: false, DataFilters: [], Format: CSV, Location: InMemoryFileIndex(1 paths)[file:/Users/lorenzo/Documents/Cours/E4FD/Data Engineering/Lab1/Lab1Pra..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<id:int,category:string,value:double,text:string>
+                                 :- FileScan csv [id#17,category#18,value#19,text#20] Batched: false, DataFilters: [], Format: CSV, Location: InMemoryFileIndex(1 paths)[file:/Users/lorenzo/Documents/Cours/E4FD/Data-Engineering/Lab1/Lab1Pra..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<id:int,category:string,value:double,text:string>
+                                 +- FileScan csv [id#38,category#39,value#40,text#41] Batched: false, DataFilters: [], Format: CSV, Location: InMemoryFileIndex(1 paths)[file:/Users/lorenzo/Documents/Cours/E4FD/Data-Engineering/Lab1/Lab1Pra..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<id:int,category:string,value:double,text:string>

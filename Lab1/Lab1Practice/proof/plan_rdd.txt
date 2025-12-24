@@ -1,7 +1,7 @@
-2025-10-21 13:46:45.440592
+2025-12-24 12:46:16.952130
 
-InMemoryTableScan [id#1049, category#1050, value#1051, text#1052]
-   +- InMemoryRelation [id#1049, category#1050, value#1051, text#1052], StorageLevel(disk, memory, deserialized, 1 replicas)
+InMemoryTableScan [id#17, category#18, value#19, text#20]
+   +- InMemoryRelation [id#17, category#18, value#19, text#20], StorageLevel(disk, memory, deserialized, 1 replicas)
          +- Union
-            :- FileScan csv [id#1049,category#1050,value#1051,text#1052] Batched: false, DataFilters: [], Format: CSV, Location: InMemoryFileIndex(1 paths)[file:/Users/lorenzo/Documents/Cours/E4FD/Data Engineering/Lab1/Lab1Pra..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<id:int,category:string,value:double,text:string>
-            +- FileScan csv [id#1070,category#1071,value#1072,text#1073] Batched: false, DataFilters: [], Format: CSV, Location: InMemoryFileIndex(1 paths)[file:/Users/lorenzo/Documents/Cours/E4FD/Data Engineering/Lab1/Lab1Pra..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<id:int,category:string,value:double,text:string>
+            :- FileScan csv [id#17,category#18,value#19,text#20] Batched: false, DataFilters: [], Format: CSV, Location: InMemoryFileIndex(1 paths)[file:/Users/lorenzo/Documents/Cours/E4FD/Data-Engineering/Lab1/Lab1Pra..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<id:int,category:string,value:double,text:string>
+            +- FileScan csv [id#38,category#39,value#40,text#41] Batched: false, DataFilters: [], Format: CSV, Location: InMemoryFileIndex(1 paths)[file:/Users/lorenzo/Documents/Cours/E4FD/Data-Engineering/Lab1/Lab1Pra..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<id:int,category:string,value:double,text:string>
