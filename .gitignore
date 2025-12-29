@@ -1,1 +1,11 @@
-lab2/lab2 Assignment/retail_schema_20250826.dump
+# lab2 
+lab2/lab2Assignment/retail_schema_20250826.dump
+lab2/lab2Assignment/fact_events.csv
+lab2/lab2Assignment/fact_events.csv.snappy
+lab2/lab2Assignment/brand.csv
+lab2/lab2Assignment/category.csv
+lab2/lab2Assignment/events.csv
+lab2/lab2Assignment/product_name.csv
+lab2/lab2Assignment/product.csv
+lab2/lab2Assignment/session.csv
+lab2/lab2Assignment/user.csv
