@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil | Projet DE1</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav>
+        <div class="container nav-container">
+            <span class="brand">DE1 Project</span>
+            <div class="nav-links">
+                <a href="index.html" class="active">Accueil</a>
+                <a href="report.html">Rapport</a>
+                <a href="code.html">Code & Config</a>
+                <a href="logs.html">Logs</a>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <div class="container">
+            <h1>Data Engineering I : Rapport Final</h1>
+            <p class="subtitle">Analyse de la Sécurité Routière aux USA (2016-2023)</p>
+            <p class="authors">Auteurs : Couzinet Lorenzo & Rabahi Enzo</p>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section id="intro">
+            <h2>1. Cas d'Usage et Dataset</h2>
+            <div class="card">
+                <p><strong>Objectif :</strong> Aider les autorités (DOT) et les assureurs à identifier les zones à haut risque.</p>
+                <ul>
+                    <li><strong>Source :</strong> Kaggle - US Accidents (Sobhan Moosavi).</li>
+                    <li><strong>Volumétrie :</strong> ~7.7 millions d'enregistrements (3 Go CSV brut).</li>
+                    <li><strong>Problèmes identifiés :</strong> Fort taux de valeurs nulles (Météo) et typage "String" intégral nécessitant un casting.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="structure">
+            <h2>2. Organisation du Repository</h2>
+            <p>Structure des fichiers du projet final :</p>
+            <div class="file-structure">
+                <ul class="tree">
+                    <li><span class="folder">Projet/</span>
+                        <ul>
+                            <li><span class="folder">data/</span> <span class="comment">(Données brutes et traitées)</span></li>
+                            <li><span class="folder">outputs/</span> <span class="comment">(Résultats d'export)</span></li>
+                            <li><span class="folder">proof/</span> <span class="comment">(Preuves d'exécution)</span></li>
+                            <li><span class="file">de1_project_config.yml</span> <span class="comment">(Configuration paramétrique)</span></li>
+                            <li><span class="file">DE1_Project_Notebook_EN.ipynb</span> <span class="comment">(Pipeline PySpark principal)</span></li>
+                            <li><span class="file">DE1_Project_Report.pdf</span> <span class="comment">(Rapport PDF complet)</span></li>
+                            <li><span class="file">project_genai.md</span> <span class="comment">(Documentation IA)</span></li>
+                            <li><span class="file">project_metrics_log</span> <span class="comment">(Logs de performance)</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="architecture">
+            <h2>3. Architecture Lakehouse (Medallion)</h2>
+            <p>Le pipeline suit l'architecture Bronze-Silver-Gold avec Spark.</p>
+            
+            <div class="grid-3">
+                <div class="step bronze">
+                    <h3>🥉 Bronze (Landing)</h3>
+                    <p>Ingestion brute CSV. Ajout des colonnes d'audit (ingested_at). Stockage Parquet non partitionné pour la vitesse.</p>
+                </div>
+                <div class="step silver">
+                    <h3>🥈 Silver (Cleaning)</h3>
+                    <p>Casting des types (Severity INT, Date Timestamp). Partitionnement initial par <em>State</em>, puis optimisé par <em>Year</em>.</p>
+                </div>
+                <div class="step gold">
+                    <h3>🥇 Gold (Analytics)</h3>
+                    <p>Agrégats métier : Accidents par État et tendances mensuelles pour le reporting.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="performance">
+            <h2>4. Preuves et Métriques (Evidence)</h2>
+            <p>Comparaison de performance sur la requête : <em>"Compter les accidents en 2021"</em>.</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Phase</th>
+                        <th>Fichiers Lus</th>
+                        <th>Temps (ms)</th>
+                        <th>Observation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Baseline</strong> (Part. par State)</td>
+                        <td>10</td>
+                        <td>400 ms</td>
+                        <td>Lecture lente (Full Scan)</td>
+                    </tr>
+                    <tr class="highlight">
+                        <td><strong>Optimisé</strong> (Part. par Year)</td>
+                        <td><strong>7</strong></td>
+                        <td><strong>43 ms</strong></td>
+                        <td>Lecture rapide (Partition Pruning)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="note">L'optimisation par année a permis de réduire drastiquement les I/O grâce au Partition Pruning.</p>
+        </section>
+
+    </main>
+    
+    <footer>
+        <p>Projet réalisé dans le cadre du cours Data Engineering I (2025-2026).</p>
+    </footer>
+</body>
+</html>

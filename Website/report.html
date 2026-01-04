@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapport Complet | Projet DE1</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav>
+        <div class="container">
+            <span class="brand">DE1 Project</span>
+            <div class="nav-links">
+                <a href="index.html">Accueil</a>
+                <a href="report.html" class="active">Rapport</a>
+                <a href="code.html">Code & Config</a>
+                <a href="logs.html">Logs</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header>
+            <h1>Rapport Final de Projet</h1>
+            <p>Cours : Data Engineering I (2025-2026)</p>
+        </header>
+
+        <section>
+            <h2>1. Cas d'Usage et Dataset</h2>
+            <p>L'objectif est d'analyser la sécurité routière aux États-Unis pour aider les autorités de transport (DOT) et les actuaires d'assurance à identifier les zones à haut risque et les tendances temporelles.</p>
+            
+            <h3>Origine et Taille</h3>
+            <ul>
+                <li><strong>Source :</strong> "US Accidents (2016 - 2023)" via Kaggle.</li>
+                <li><strong>Taille :</strong> Environ 7,7 millions d'enregistrements (~3 Go CSV brut).</li>
+                <li><strong>Schéma Clé :</strong> ID, Severity (1-4), Start_Time, State, Weather_Condition.</li>
+            </ul>
+
+            <h3>Problèmes Identifiés</h3>
+            <p>Le dataset présente un fort taux de valeurs nulles dans les colonnes météo et un typage entièrement en String nécessitant un casting explicite.</p>
+        </section>
+
+        <section>
+            <h2>2. Système et SLOs</h2>
+            <div class="card">
+                <h3>Configuration Spark</h3>
+                <ul>
+                    <li><strong>Environnement :</strong> Cluster Spark Local Standalone.</li>
+                    <li><strong>Stockage :</strong> Parquet (Compression Snappy).</li>
+                    <li><strong>Config Réseau :</strong> <code>SPARK_LOCAL_IP = 127.0.0.1</code> forcé pour résoudre les erreurs Netty.</li>
+                </ul>
+                <h3>Objectifs (SLOs)</h3>
+                <ul>
+                    <li>Ingestion CSV vers Parquet < 1 minute.</li>
+                    <li>Aucune donnée avec Date ou État nul dans la couche Gold.</li>
+                    <li>Lecture optimisée par partitionnement temporel.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>3. Architecture Lakehouse</h2>
+            <p>L'architecture suit le modèle "Medallion".</p>
+            <ul>
+                <li><strong>Bronze :</strong> Ingestion brute, ajout timestamps d'audit.</li>
+                <li><strong>Silver :</strong> Typage (Severity->Int), Nettoyage des Nulls, Partitionnement par State (initial) puis Year (optimisé).</li>
+                <li><strong>Gold :</strong> Agrégats métier (Accidents par État, Tendances mensuelles).</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>4. Design Physique et Optimisation</h2>
+            <p>Nous avons comparé deux stratégies de partitionnement :</p>
+            <ol>
+                <li><strong>Par State (Baseline) :</strong> Efficace pour le géospatial mais génère trop de petits fichiers ("Small Files").</li>
+                <li><strong>Par Year (Optimisé) :</strong> Active le <em>Partition Pruning</em> pour les requêtes temporelles.</li>
+            </ol>
+            <p><strong>Résultat :</strong> Sur une requête filtrant l'année 2021, nous passons de <strong>400ms</strong> (lecture de tous les états) à <strong>43ms</strong> (lecture ciblée).</p>
+        </section>
+
+        <section>
+            <h2>5. Travaux Futurs</h2>
+            <ul>
+                <li><strong>Z-Ordering :</strong> Pour accélérer les recherches géographiques précises (Ville).</li>
+                <li><strong>Delta Lake :</strong> Conversion vers Delta pour le support ACID et la commande OPTIMIZE.</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Auteurs : Couzinet Lorenzo & Rabahi Enzo</p>
+    </footer>
+</body>
+</html>

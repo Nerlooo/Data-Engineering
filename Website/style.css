@@ -1,0 +1,208 @@
+/* --- RESET ET BASE --- */
+:root {
+    --bg-color: #0d1117;
+    --card-bg: #161b22;
+    --text-primary: #c9d1d9;
+    --text-secondary: #8b949e;
+    --accent: #58a6ff;
+    --accent-green: #238636;
+    --border: #30363d;
+    --font-main: 'Inter', sans-serif;
+    --font-code: 'Fira Code', 'Courier New', monospace;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- NAVIGATION BAR --- */
+nav {
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--accent);
+}
+
+.brand {
+    font-weight: bold;
+    color: #fff;
+}
+
+/* --- HEADERS --- */
+header {
+    border-bottom: 1px solid var(--border); /* Ligne sous le header */
+    padding: 60px 0 40px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+h1 { color: #ffffff; font-size: 2.5rem; margin: 0 0 10px 0; }
+h2 { color: #ffffff; border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-top: 50px; margin-bottom: 20px;}
+h3 { color: #fff; margin-top: 0; }
+
+.subtitle { font-size: 1.2rem; color: var(--accent); margin-bottom: 5px; }
+.authors { color: var(--text-secondary); font-style: italic; }
+
+/* --- CARDS & SECTIONS --- */
+section { margin-bottom: 50px; }
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+}
+
+/* --- STYLES ACCUEIL : TREE VIEW (Arborescence) --- */
+.file-structure {
+    background: #010409;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+    font-family: var(--font-code);
+}
+
+ul.tree, ul.tree ul { list-style-type: none; margin: 0; padding: 0; }
+ul.tree ul { margin-left: 20px; border-left: 1px solid var(--border); }
+ul.tree li { margin: 5px 0; padding-left: 10px; position: relative; }
+ul.tree li::before {
+    content: ""; position: absolute; top: 12px; left: 0;
+    width: 8px; height: 1px; background: var(--border);
+}
+.folder { color: var(--accent); font-weight: bold; }
+.file { color: var(--text-primary); }
+.comment { color: var(--text-secondary); font-style: italic; font-size: 0.9em; margin-left: 10px; }
+
+/* --- STYLES ACCUEIL : GRID ARCHITECTURE --- */
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.step {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.step:hover { transform: translateY(-5px); border-color: var(--accent); }
+.step h3 { margin-bottom: 10px; }
+
+/* --- STYLES CODE & LOGS --- */
+pre {
+    background: #000;
+    padding: 15px;
+    border-radius: 6px;
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    margin: 0;
+}
+
+code {
+    font-family: var(--font-code);
+    font-size: 0.9rem;
+    color: #e6edf3;
+}
+
+.notebook-cell {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.cell-header {
+    background: #21262d;
+    padding: 5px 15px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-code);
+}
+.cell-content { padding: 15px; }
+
+/* --- TABLES (Logs & Performance) --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+}
+
+th { background-color: #21262d; color: #fff; }
+tr:hover { background-color: #21262d; }
+
+.highlight {
+    background-color: rgba(35, 134, 54, 0.1);
+    border-left: 4px solid var(--accent-green);
+}
+
+.status-ok { color: var(--accent-green); font-weight: bold; }
+.status-warn { color: #d29922; font-weight: bold; }
+
+.note {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    background: rgba(88, 166, 255, 0.1);
+    padding: 10px;
+    border-radius: 4px;
+    border-left: 3px solid var(--accent);
+}
+
+/* --- FOOTER --- */
+footer {
+    text-align: center;
+    padding: 40px 0;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+    margin-top: 60px;
+}
