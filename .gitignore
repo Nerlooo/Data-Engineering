@@ -15,8 +15,9 @@ lab3/Lab3Assignment/retail_dw_20250826
 
 # Projet
 Projet/data/Us_Accidents_March23.csv
-Projet/outputs/bronze/
-Projet/outputs/bronze_parquet/
-Projet/outputs/silver/
-Projet/outputs/gold/
-Projet/outputs/silver_optimized_by_year/
+Projet/outputs/project/bronze/
+Projet/outputs/project/bronze_parquet/
+Projet/outputs/project/silver/
+Projet/outputs/project/gold/
+Projet/outputs/project/silver_optimized_by_year/
+Projet/DE1_Project_Report.pages

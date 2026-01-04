@@ -1,8 +1,8 @@
 paths:
   raw_csv_glob: "data/US_Accidents_March23.csv"
-  bronze: "outputs/bronze"
-  silver: "outputs/silver"
-  gold: "outputs/gold"
+  bronze: "outputs/project/bronze"
+  silver: "outputs/project/silver"
+  gold: "outputs/project/gold"
   proof: "proof"
 
 layout:

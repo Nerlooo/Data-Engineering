@@ -1,25 +1,25 @@
 == Parsed Logical Plan ==
 'Sort ['total_accidents DESC NULLS LAST], true
-+- Aggregate [State#999], [State#999, count(accident_id#996) AS total_accidents#1005L, avg(Severity#997) AS avg_severity#1006]
-   +- Relation [accident_id#996,Severity#997,event_time#998,State#999,City#1000,temp_f#1001,Weather_Condition#1002,_ingested_at#1003,_source_file#1004] parquet
++- Aggregate [State#1434], [State#1434, count(accident_id#1431) AS total_accidents#1440L, avg(Severity#1432) AS avg_severity#1441]
+   +- Relation [accident_id#1431,Severity#1432,event_time#1433,State#1434,City#1435,temp_f#1436,Weather_Condition#1437,_ingested_at#1438,_source_file#1439] parquet
 
 == Analyzed Logical Plan ==
 State: string, total_accidents: bigint, avg_severity: double
-Sort [total_accidents#1005L DESC NULLS LAST], true
-+- Aggregate [State#999], [State#999, count(accident_id#996) AS total_accidents#1005L, avg(Severity#997) AS avg_severity#1006]
-   +- Relation [accident_id#996,Severity#997,event_time#998,State#999,City#1000,temp_f#1001,Weather_Condition#1002,_ingested_at#1003,_source_file#1004] parquet
+Sort [total_accidents#1440L DESC NULLS LAST], true
++- Aggregate [State#1434], [State#1434, count(accident_id#1431) AS total_accidents#1440L, avg(Severity#1432) AS avg_severity#1441]
+   +- Relation [accident_id#1431,Severity#1432,event_time#1433,State#1434,City#1435,temp_f#1436,Weather_Condition#1437,_ingested_at#1438,_source_file#1439] parquet
 
 == Optimized Logical Plan ==
-Sort [total_accidents#1005L DESC NULLS LAST], true
-+- Aggregate [State#999], [State#999, count(accident_id#996) AS total_accidents#1005L, avg(Severity#997) AS avg_severity#1006]
-   +- Project [accident_id#996, Severity#997, State#999]
-      +- Relation [accident_id#996,Severity#997,event_time#998,State#999,City#1000,temp_f#1001,Weather_Condition#1002,_ingested_at#1003,_source_file#1004] parquet
+Sort [total_accidents#1440L DESC NULLS LAST], true
++- Aggregate [State#1434], [State#1434, count(accident_id#1431) AS total_accidents#1440L, avg(Severity#1432) AS avg_severity#1441]
+   +- Project [accident_id#1431, Severity#1432, State#1434]
+      +- Relation [accident_id#1431,Severity#1432,event_time#1433,State#1434,City#1435,temp_f#1436,Weather_Condition#1437,_ingested_at#1438,_source_file#1439] parquet
 
 == Physical Plan ==
 AdaptiveSparkPlan isFinalPlan=false
-+- Sort [total_accidents#1005L DESC NULLS LAST], true, 0
-   +- Exchange rangepartitioning(total_accidents#1005L DESC NULLS LAST, 200), ENSURE_REQUIREMENTS, [plan_id=963]
-      +- HashAggregate(keys=[State#999], functions=[count(accident_id#996), avg(Severity#997)], output=[State#999, total_accidents#1005L, avg_severity#1006])
-         +- Exchange hashpartitioning(State#999, 200), ENSURE_REQUIREMENTS, [plan_id=960]
-            +- HashAggregate(keys=[State#999], functions=[partial_count(accident_id#996), partial_avg(Severity#997)], output=[State#999, count#1022L, sum#1023, count#1024L])
-               +- FileScan parquet [accident_id#996,Severity#997,State#999] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/Users/lorenzo/Documents/Cours/E4FD/Data-Engineering/Projet/outpu..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<accident_id:string,Severity:int,State:string>
++- Sort [total_accidents#1440L DESC NULLS LAST], true, 0
+   +- Exchange rangepartitioning(total_accidents#1440L DESC NULLS LAST, 200), ENSURE_REQUIREMENTS, [plan_id=1862]
+      +- HashAggregate(keys=[State#1434], functions=[count(accident_id#1431), avg(Severity#1432)], output=[State#1434, total_accidents#1440L, avg_severity#1441])
+         +- Exchange hashpartitioning(State#1434, 200), ENSURE_REQUIREMENTS, [plan_id=1859]
+            +- HashAggregate(keys=[State#1434], functions=[partial_count(accident_id#1431), partial_avg(Severity#1432)], output=[State#1434, count#1457L, sum#1458, count#1459L])
+               +- FileScan parquet [accident_id#1431,Severity#1432,State#1434] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/Users/lorenzo/Documents/Cours/E4FD/Data-Engineering/Projet/outpu..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<accident_id:string,Severity:int,State:string>
