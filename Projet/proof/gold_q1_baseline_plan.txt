@@ -1,0 +1,25 @@
+== Parsed Logical Plan ==
+'Sort ['total_accidents DESC NULLS LAST], true
++- Aggregate [State#930], [State#930, count(accident_id#927) AS total_accidents#936L, round(avg(Severity#928), 2) AS avg_severity#937]
+   +- Relation [accident_id#927,Severity#928,event_time#929,State#930,City#931,temp_f#932,Weather_Condition#933,_ingested_at#934,_source_file#935] parquet
+
+== Analyzed Logical Plan ==
+State: string, total_accidents: bigint, avg_severity: double
+Sort [total_accidents#936L DESC NULLS LAST], true
++- Aggregate [State#930], [State#930, count(accident_id#927) AS total_accidents#936L, round(avg(Severity#928), 2) AS avg_severity#937]
+   +- Relation [accident_id#927,Severity#928,event_time#929,State#930,City#931,temp_f#932,Weather_Condition#933,_ingested_at#934,_source_file#935] parquet
+
+== Optimized Logical Plan ==
+Sort [total_accidents#936L DESC NULLS LAST], true
++- Aggregate [State#930], [State#930, count(accident_id#927) AS total_accidents#936L, round(avg(Severity#928), 2) AS avg_severity#937]
+   +- Project [accident_id#927, Severity#928, State#930]
+      +- Relation [accident_id#927,Severity#928,event_time#929,State#930,City#931,temp_f#932,Weather_Condition#933,_ingested_at#934,_source_file#935] parquet
+
+== Physical Plan ==
+AdaptiveSparkPlan isFinalPlan=false
++- Sort [total_accidents#936L DESC NULLS LAST], true, 0
+   +- Exchange rangepartitioning(total_accidents#936L DESC NULLS LAST, 200), ENSURE_REQUIREMENTS, [plan_id=511]
+      +- HashAggregate(keys=[State#930], functions=[count(accident_id#927), avg(Severity#928)], output=[State#930, total_accidents#936L, avg_severity#937])
+         +- Exchange hashpartitioning(State#930, 200), ENSURE_REQUIREMENTS, [plan_id=508]
+            +- HashAggregate(keys=[State#930], functions=[partial_count(accident_id#927), partial_avg(Severity#928)], output=[State#930, count#966L, sum#967, count#968L])
+               +- FileScan parquet [accident_id#927,Severity#928,State#930] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/Users/lorenzo/Documents/Cours/E4FD/Data-Engineering/Projet/outpu..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<accident_id:string,Severity:int,State:string>

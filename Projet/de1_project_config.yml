@@ -1,10 +1,10 @@
-data_path: "data/US_Accidents_March23.csv"  
-output_path: "outputs/project"
-proof_path: "proof"
+paths:
+  raw_csv_glob: "data/US_Accidents_March23.csv"
+  bronze: "outputs/bronze"
+  silver: "outputs/silver"
+  gold: "outputs/gold"
+  proof: "proof"
 
-# Définition du schéma attendu pour la Silver 
-schema:
-  columns: ["id", "date", "category", "price", "quantity"]
-
-# Paramètres de partitionnement
-partition_col: "date"
+layout:
+  # Utilisé dans la cellule 3 et 5 pour le partitionnement
+  partition_by: ["State"]

@@ -14,4 +14,9 @@ lab2/lab2Assignment/user.csv
 lab3/Lab3Assignment/retail_dw_20250826
 
 # Projet
-Projet/data
+Projet/data/Us_Accidents_March23.csv
+Projet/outputs/bronze/
+Projet/outputs/bronze_parquet/
+Projet/outputs/silver/
+Projet/outputs/gold/
+Projet/outputs/silver_optimized_by_year/

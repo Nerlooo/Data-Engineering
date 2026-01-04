@@ -1,0 +1,21 @@
+== Parsed Logical Plan ==
+Filter atleastnnonnulls(3, event_time#910, State#875, accident_id#909)
++- Project [ID#861 AS accident_id#909, cast(Severity#863 as int) AS Severity#912, cast(Start_Time#864 as timestamp) AS event_time#910, State#875, City#873, cast(Temperature(F)#881 as double) AS temp_f#911, Weather_Condition#889, _ingested_at#907, _source_file#908]
+   +- Relation [ID#861,Source#862,Severity#863,Start_Time#864,End_Time#865,Start_Lat#866,Start_Lng#867,End_Lat#868,End_Lng#869,Distance(mi)#870,Description#871,Street#872,City#873,County#874,State#875,Zipcode#876,Country#877,Timezone#878,Airport_Code#879,Weather_Timestamp#880,Temperature(F)#881,Wind_Chill(F)#882,Humidity(%)#883,Pressure(in)#884,Visibility(mi)#885,... 23 more fields] parquet
+
+== Analyzed Logical Plan ==
+accident_id: string, Severity: int, event_time: timestamp, State: string, City: string, temp_f: double, Weather_Condition: string, _ingested_at: timestamp, _source_file: string
+Filter atleastnnonnulls(3, event_time#910, State#875, accident_id#909)
++- Project [ID#861 AS accident_id#909, cast(Severity#863 as int) AS Severity#912, cast(Start_Time#864 as timestamp) AS event_time#910, State#875, City#873, cast(Temperature(F)#881 as double) AS temp_f#911, Weather_Condition#889, _ingested_at#907, _source_file#908]
+   +- Relation [ID#861,Source#862,Severity#863,Start_Time#864,End_Time#865,Start_Lat#866,Start_Lng#867,End_Lat#868,End_Lng#869,Distance(mi)#870,Description#871,Street#872,City#873,County#874,State#875,Zipcode#876,Country#877,Timezone#878,Airport_Code#879,Weather_Timestamp#880,Temperature(F)#881,Wind_Chill(F)#882,Humidity(%)#883,Pressure(in)#884,Visibility(mi)#885,... 23 more fields] parquet
+
+== Optimized Logical Plan ==
+Project [ID#861 AS accident_id#909, cast(Severity#863 as int) AS Severity#912, cast(Start_Time#864 as timestamp) AS event_time#910, State#875, City#873, cast(Temperature(F)#881 as double) AS temp_f#911, Weather_Condition#889, _ingested_at#907, _source_file#908]
++- Filter atleastnnonnulls(3, cast(Start_Time#864 as timestamp), State#875, ID#861)
+   +- Relation [ID#861,Source#862,Severity#863,Start_Time#864,End_Time#865,Start_Lat#866,Start_Lng#867,End_Lat#868,End_Lng#869,Distance(mi)#870,Description#871,Street#872,City#873,County#874,State#875,Zipcode#876,Country#877,Timezone#878,Airport_Code#879,Weather_Timestamp#880,Temperature(F)#881,Wind_Chill(F)#882,Humidity(%)#883,Pressure(in)#884,Visibility(mi)#885,... 23 more fields] parquet
+
+== Physical Plan ==
+*(1) Project [ID#861 AS accident_id#909, cast(Severity#863 as int) AS Severity#912, cast(Start_Time#864 as timestamp) AS event_time#910, State#875, City#873, cast(Temperature(F)#881 as double) AS temp_f#911, Weather_Condition#889, _ingested_at#907, _source_file#908]
++- *(1) Filter atleastnnonnulls(3, cast(Start_Time#864 as timestamp), State#875, ID#861)
+   +- *(1) ColumnarToRow
+      +- FileScan parquet [ID#861,Severity#863,Start_Time#864,City#873,State#875,Temperature(F)#881,Weather_Condition#889,_ingested_at#907,_source_file#908] Batched: true, DataFilters: [atleastnnonnulls(3, cast(Start_Time#864 as timestamp), State#875, ID#861)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/Users/lorenzo/Documents/Cours/E4FD/Data-Engineering/Projet/outpu..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<ID:string,Severity:string,Start_Time:string,City:string,State:string,Temperature(F):string...
