@@ -1,0 +1,10 @@
+data_path: "data/US_Accidents_March23.csv"  
+output_path: "outputs/project"
+proof_path: "proof"
+
+# Définition du schéma attendu pour la Silver 
+schema:
+  columns: ["id", "date", "category", "price", "quantity"]
+
+# Paramètres de partitionnement
+partition_col: "date"
